@@ -1,134 +1,40 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <title>ガーデンシティ品川御殿山 次のバス カウントダウンタイマー</title>
+</head>
 <body>
 
 <h2>次のバス</h2>
 
-<p id="next-bus"></p>
+<h3>ガーデンシティ品川御殿山へ行く</h3>
+<ul>
+    <li>
+        <a href="gotanda-gc.html">
+            五反田駅→ガーデンシティ
+        </a>
+    </li>
+    <li>
+        <a href="shinagawa-gc.html">
+        	品川駅→ガーデンシティ
+        </a>
+    </li>
+</ul>
 
-<p id="countdown"></p>
+<h3>ガーデンシティ品川御殿山から駅へ</h3>
+<ul>
+    <li>
+        <a href="gc-gotanda.html">
+        ガーデンシティ→五反田駅
+        </a>
+    </li>
+    <li>
+        <a href="gc-shinagawa.html">
+        ガーデンシティ→品川駅
+        </a>
+    </li>
 
-<script>
-// バスのスケジュール
-let schedule = {
-  "weekday": {
-    "regular": [
-      {"hour": 7, "minutes": [30]},
-      {"hour": 8, "minutes": []},
-      {"hour": 9, "minutes": []},
-      {"hour": 10, "minutes": [0, 20, 40]},
-      {"hour": 11, "minutes": [0, 20, 40]},
-      {"hour": 12, "minutes": [0, 20, 40]},
-      {"hour": 13, "minutes": [0, 20, 40]},
-      {"hour": 14, "minutes": [0, 20, 40]},
-      {"hour": 15, "minutes": [0, 20, 40]},
-      {"hour": 16, "minutes": [0, 20, 40, 55]},
-      {"hour": 17, "minutes": [5, 15, 25, 35, 45, 55]},
-      {"hour": 18, "minutes": [5, 15, 25, 35, 45, 55]},
-      {"hour": 19, "minutes": [5, 15, 25, 35, 45, 55]},
-      {"hour": 20, "minutes": [5, 25, 45]},
-      {"hour": 21, "minutes": [5, 25, 45]}
-    ],
-    "irregular": {
-      "start_hour": 7,
-      "start_minute": 30,
-      "end_hour": 10,
-      "end_minute": 0,
-      "interval_minutes": [6, 7]
-    }
-  },
-  "weekend": [
-    {"hour": 7, "minutes": []},
-    {"hour": 8, "minutes": [36]},
-    {"hour": 9, "minutes": [11, 46]},
-    {"hour": 10, "minutes": [21, 56]},
-    {"hour": 11, "minutes": [31]},
-    {"hour": 12, "minutes": [6, 41]},
-    {"hour": 13, "minutes": [16]},
-    {"hour": 14, "minutes": []},
-    {"hour": 15, "minutes": []},
-    {"hour": 16, "minutes": []},
-    {"hour": 17, "minutes": []},
-    {"hour": 18, "minutes": []},
-    {"hour": 19, "minutes": []},
-    {"hour": 20, "minutes": []},
-    {"hour": 21, "minutes": []}
-  ]
-};
-
-// 現在日時を取得
-let now = new Date();
-
-// 次のバスの時間を見つける
-let nextBusTime = findNextBusTime(schedule, now);
-if (nextBusTime) {
-  document.getElementById("next-bus").innerHTML = nextBusTime.toLocaleDateString("ja-JP", { year: 'numeric', month: '2-digit', day: '2-digit', weekday: 'long', hour: '2-digit', minute: '2-digit' });
-} else {
-  document.getElementById("next-bus").innerHTML = "今日のバスの運行は終了しました。次のバスは明日の7:30です。";
-}
-
-// 次のバスの時間を見つける関数
-function findNextBusTime(schedule, now) {
-  let isWeekend = (now.getDay() === 0 || now.getDay() === 6);
-  let scheduleForToday = isWeekend ? schedule["weekend"] : schedule["weekday"]["regular"];
-  
-  // 7:30〜10:00のとき
-  if (!isWeekend && now.getHours() >= 7 && now.getHours() < 10) {
-    let irregularSchedule = schedule["weekday"]["irregular"];
-    if (now.getHours() === irregularSchedule["start_hour"] && now.getMinutes() >= irregularSchedule["start_minute"] ||
-        now.getHours() > irregularSchedule["start_hour"] && now.getHours() < irregularSchedule["end_hour"] ||
-        now.getHours() === irregularSchedule["end_hour"] && now.getMinutes() < irregularSchedule["end_minute"]) {
-      return "朝7:30〜10:00は、6〜7分おきでシャトルバスを運行しています。";
-    }
-  }
-
-  let nextBusTime = null;
-
-  for (let timeSlot of scheduleForToday) {
-    let hour = timeSlot["hour"];
-    for (let minute of timeSlot["minutes"]) {
-      let busTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hour, minute);
-      if (busTime > now) {
-        if (nextBusTime === null || busTime < nextBusTime) {
-          nextBusTime = busTime;
-        }
-      }
-    }
-  }
-
-  // If there's no more buses for the day, return null
-  if (!nextBusTime && !isWeekend) {
-    nextBusTime = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 7, 30);
-  }
-
-  return nextBusTime;
-}
-
-// 次のバスまでのカウントダウン時間を計算する関数
-function countdownToNextBus(nextBusTime, currentTime) {
-  if (typeof nextBusTime === 'string') {
-    return nextBusTime;
-  }
-
-  let remainingTime = Math.floor((nextBusTime - currentTime) / 1000);
-
-  let remainingMinutes = Math.floor(remainingTime / 60);
-  let remainingSeconds = remainingTime % 60;
-
-  return remainingMinutes + "分" + remainingSeconds + "秒後に出発します";
-}
-
-// 次のバスまでのカウントダウンを表示
-function updateCountdown() {
-  let currentTime = new Date();
-  let countdown = countdownToNextBus(nextBusTime, currentTime);
-  document.getElementById("countdown").innerHTML = countdown;
-}
-
-// updateCountdown関数を1秒ごとに呼び出す
-setInterval(updateCountdown, 1000);
-
-</script>
+</ul>
 
 </body>
 </html>
