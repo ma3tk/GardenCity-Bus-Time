@@ -1,15 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" rel="stylesheet">
 <head>
     <title>五反田駅→ガーデンシティ 次のバス</title>
 </head>
 <body>
 
-<h2>五反田駅→ガーデンシティ 次のバス</h2>
+<section class="section">
+    <div class="content">
+        <h2 class="title is-size-5">五反田駅→ガーデンシティ 次のバス</h2>
 
-<p id="next-bus"></p>
+        <p id="next-bus"></p>
 
-<p id="countdown"></p>
+        <p id="countdown"></p>
+
+        <a href="./index.html" class="is-size-7">トップへ</a>
+    </div>
+</section>
 
 <script>
 // バスのスケジュール
@@ -63,7 +72,7 @@ let now = new Date();
 // 次のバスの時間を見つける
 let nextBusTime = findNextBusTime(schedule, now);
 if (nextBusTime) {
-  document.getElementById("next-bus").innerHTML = nextBusTime.toLocaleDateString("ja-JP", { year: 'numeric', month: '2-digit', day: '2-digit', weekday: 'long', hour: '2-digit', minute: '2-digit' });
+  document.getElementById("next-bus").innerHTML = nextBusTime.toLocaleDateString("ja-JP", { year: 'numeric', month: '2-digit', day: '2-digit', weekday: 'short', hour: '2-digit', minute: '2-digit' });
 } else {
   document.getElementById("next-bus").innerHTML = "今日のバスの運行は終了しました。次のバスは明日の7:30です。";
 }
