@@ -97,5 +97,13 @@ function countdownToNextBus(nextBusTime, currentTime) {
 function updateCountdown() {
     let currentTime = new Date();
     let countdown = countdownToNextBus(nextBusTime, currentTime);
+
+    // バスが出発したら、次のバスの時間と次の次のバスの時間を更新
+    if (nextBusTime < currentTime) {
+        document.getElementById("next-bus").innerHTML = nextBusTimeText();
+        document.getElementById("next-next-bus").innerHTML = nextNextBusTimeText();
+        countdown = countdownToNextBus(nextBusTime, new Date());  // 新しい "nextBusTime" に基づいてカウントダウンを更新
+    }
+
     document.getElementById("countdown").innerHTML = countdown;
 }
