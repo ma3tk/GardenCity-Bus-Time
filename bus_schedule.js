@@ -107,3 +107,61 @@ function updateCountdown() {
 
     document.getElementById("countdown").innerHTML = countdown;
 }
+
+// テーブルを作成する
+function generateScheduleTable(tableId, scheduleForDay, isWeekdayTable) {
+    let table = document.getElementById(tableId);
+    let tbody = document.createElement('tbody');
+
+    // テーブルのヘッダーを作成
+    let header = document.createElement('tr');
+    header.innerHTML = `<th style="background-color: rgb(204, 193, 217);">時間</th>
+                        <th style="background-color: rgb(204, 193, 217);">${tableId === 'weekday-table' ? '平日' : '週末'}</th>`;
+    tbody.appendChild(header);
+
+    // 現在の時間と曜日を取得
+    let currentDate = new Date();
+    let currentHour = currentDate.getHours();
+    let currentDay = currentDate.getDay();
+
+    // 現在の日付が平日であるかどうかをチェック
+    let isWeekday = currentDay >= 1 && currentDay <= 5;
+
+    // 7時から20時までの各時間帯に対して
+    for (let hour = 7; hour <= 20; hour++) {
+        let row = document.createElement('tr');
+
+        // 現在の時間と行の時間が一致し、かつ現在が平日で、かつテーブルが平日のテーブルの場合、行にクラスを追加
+        if (hour === currentHour && isWeekday && isWeekdayTable) {
+            row.classList.add('is-selected');
+        }
+
+        // 時間帯のセルを作成
+        let timeCell = document.createElement('th');
+        timeCell.textContent = hour;
+        row.appendChild(timeCell);
+
+        // スケジュールのセルを作成
+        let scheduleCell = document.createElement('td');
+        scheduleCell.innerHTML = generateScheduleCellContent(scheduleForDay, hour);
+        row.appendChild(scheduleCell);
+
+        tbody.appendChild(row);
+    }
+
+    table.appendChild(tbody);
+}
+
+// スケジュールのセルの内容を作成する
+function generateScheduleCellContent(scheduleForDay, hour) {
+    let content = "";
+    for (let timeSlot of scheduleForDay) {
+        if (timeSlot.hour === hour) {
+            content = timeSlot.minutes.join("　");
+            if (hour === 7) {
+                content += "　7:30-9:55 6～7分間隔運行 ";
+            }
+        }
+    }
+    return content;
+}
