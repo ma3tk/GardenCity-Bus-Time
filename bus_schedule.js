@@ -1,4 +1,46 @@
 let nextBusTime;
+let nextNextBusTime;
+let nextNextNextBusTime;
+
+function nextBusTimeText() {
+    // 現在日時を取得
+    let now = new Date();
+
+    // 次のバスの時間を見つける
+    nextBusTime = findNextBusTime(schedule, now);
+    if (nextBusTime) {
+        return "次のバス：" + nextBusTime.toLocaleTimeString("ja-JP", {
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    }
+
+    return "今日のバスの運行は終了しました。次のバスは明日の7:30です。";
+}
+
+function nextNextBusTimeText() {
+    // 次のバスの時間を基に次の次のバスの時間を見つける
+    nextNextBusTime = findNextBusTime(schedule, new Date(nextBusTime.getTime() + 60000)); // 次のバスの時間を1分進めて次の次のバスを見つける
+    nextNextNextBusTime = findNextBusTime(schedule, new Date(nextNextBusTime.getTime() + 60000)); // さらに次のバス
+    let timeText = "後続：";
+    if (nextNextBusTime) {
+        timeText = timeText + nextNextBusTime.toLocaleTimeString("ja-JP", {
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    }
+    if (nextNextNextBusTime) {
+        timeText = timeText + ", " + nextNextNextBusTime.toLocaleTimeString("ja-JP", {
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    }
+    if (nextNextBusTime || nextNextNextBusTime) {
+        return timeText;
+    }
+
+    return "";
+}
 
 // 次のバスの時間を見つける関数
 function findNextBusTime(schedule, now) {

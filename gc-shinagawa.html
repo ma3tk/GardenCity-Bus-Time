@@ -16,6 +16,8 @@
 
         <p id="countdown"></p>
 
+        <p class="is-size-7" id="next-next-bus"></p>
+
         <a href="./index.html" class="is-size-7">トップへ</a>
     </div>
 </section>
@@ -38,19 +40,12 @@
         .catch(error => console.error('Error:', error));
 
     function initializeScript() {
-		// 現在日時を取得
-        let now = new Date();
+        document.getElementById("next-bus").innerHTML = nextBusTimeText();
+        document.getElementById("next-next-bus").innerHTML = nextNextBusTimeText();
 
-		// 次のバスの時間を見つける
-        nextBusTime = findNextBusTime(schedule, now);
-        if (nextBusTime) {
-            document.getElementById("next-bus").innerHTML = nextBusTime.toLocaleDateString("ja-JP", { year: 'numeric', month: '2-digit', day: '2-digit', weekday: 'short', hour: '2-digit', minute: '2-digit' });
-        } else {
-            document.getElementById("next-bus").innerHTML = "今日のバスの運行は終了しました。次のバスは明日の7:30です。";
-        }
         updateCountdown();
 
-		// updateCountdown関数を1秒ごとに呼び出す
+        // updateCountdown関数を1秒ごとに呼び出す
         setInterval(updateCountdown, 1000);
     }
 </script>
