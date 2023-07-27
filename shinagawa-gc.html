@@ -18,6 +18,10 @@
 
         <p class="is-size-7" id="next-next-bus"></p>
 
+        <table id="weekday-table" class="table is-striped is-narrow" style="max-width: 500px;"></table>
+
+        <table id="weekend-table" class="table is-striped is-narrow" style="max-width: 500px;"></table>
+
         <a href="./index.html" class="is-size-7">トップへ</a>
     </div>
 </section>
@@ -42,6 +46,8 @@
     function initializeScript() {
         document.getElementById("next-bus").innerHTML = nextBusTimeText();
         document.getElementById("next-next-bus").innerHTML = nextNextBusTimeText();
+
+        generateScheduleTable('weekday-table', schedule.weekday.regular, true);
 
         updateCountdown();
 
