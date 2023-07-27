@@ -1,0 +1,43 @@
+{
+  "weekday": {
+    "regular": [
+      {"hour": 7, "minutes": [30]},
+      {"hour": 8, "minutes": []},
+      {"hour": 9, "minutes": []},
+      {"hour": 10, "minutes": [9, 29, 49]},
+      {"hour": 11, "minutes": [9, 29, 49]},
+      {"hour": 12, "minutes": [9, 29, 49]},
+      {"hour": 13, "minutes": [9, 29, 49]},
+      {"hour": 14, "minutes": [9, 29, 49]},
+      {"hour": 15, "minutes": [9, 29, 49]},
+      {"hour": 16, "minutes": [9, 29, 49]},
+      {"hour": 17, "minutes": [4, 14, 24, 34, 44, 54]},
+      {"hour": 18, "minutes": [4, 14, 24, 34, 44, 54]},
+      {"hour": 19, "minutes": [4, 14, 24, 34, 44, 54]},
+      {"hour": 20, "minutes": [14, 34, 54]}
+    ],
+    "irregular": {
+      "start_hour": 7,
+      "start_minute": 30,
+      "end_hour": 10,
+      "end_minute": 9,
+      "interval_minutes": [6, 7]
+    }
+  },
+  "weekend": [
+    {"hour": 7, "minutes": []},
+    {"hour": 8, "minutes": [45]},
+    {"hour": 9, "minutes": [20, 55]},
+    {"hour": 10, "minutes": [30]},
+    {"hour": 11, "minutes": [5, 40]},
+    {"hour": 12, "minutes": [15, 50]},
+    {"hour": 13, "minutes": [25]},
+    {"hour": 14, "minutes": []},
+    {"hour": 15, "minutes": []},
+    {"hour": 16, "minutes": []},
+    {"hour": 17, "minutes": []},
+    {"hour": 18, "minutes": []},
+    {"hour": 19, "minutes": []},
+    {"hour": 20, "minutes": []}
+  ]
+}
