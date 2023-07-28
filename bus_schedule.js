@@ -53,7 +53,9 @@ function findNextBusTime(schedule, now) {
         if (now.getHours() === irregularSchedule["start_hour"] && now.getMinutes() >= irregularSchedule["start_minute"] ||
             now.getHours() > irregularSchedule["start_hour"] && now.getHours() < irregularSchedule["end_hour"] ||
             now.getHours() === irregularSchedule["end_hour"] && now.getMinutes() < irregularSchedule["end_minute"]) {
-            return "朝7:30〜10:00は、6〜7分おきでシャトルバスを運行しています。";
+            // 代わりに次のバスの時間を計算して返す
+            let nextMinute = now.getMinutes() + Math.min(...irregularSchedule["interval_minutes"]);
+            return new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), nextMinute);
         }
     }
 
